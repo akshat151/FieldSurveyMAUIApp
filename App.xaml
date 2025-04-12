@@ -1,0 +1,71 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FieldSurveyMAUIApp"
+             xmlns:converters="clr-namespace:FieldSurveyMAUIApp.Converters"
+             x:Class="FieldSurveyMAUIApp.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Global Converters -->
+            <converters:StringNotEmptyConverter x:Key="StringNotEmptyConverter" />
+            <converters:BoolToFontAttributesConverter x:Key="BoolToFontAttributesConverter" />
+            <converters:StringToDateConverter x:Key="StringToDateConverter" />
+            <converters:StringToChoiceConverter x:Key="StringToChoiceConverter" />
+
+            <!-- Application Colors -->
+            <Color x:Key="PrimaryColor">#512BD4</Color>
+            <Color x:Key="SecondaryColor">#DFD8F7</Color>
+            <Color x:Key="AccentColor">#FF5722</Color>
+            <Color x:Key="WarningColor">#FFC107</Color>
+            <Color x:Key="DangerColor">#F44336</Color>
+            <Color x:Key="SuccessColor">#4CAF50</Color>
+            <Color x:Key="BackgroundColor">#FFFFFF</Color>
+            <Color x:Key="SurfaceColor">#F5F5F5</Color>
+            <Color x:Key="TextPrimaryColor">#212121</Color>
+            <Color x:Key="TextSecondaryColor">#757575</Color>
+
+            <!-- Global Button Styles -->
+            <Style TargetType="Button" x:Key="PrimaryButton">
+                <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="15,10" />
+            </Style>
+            
+            <Style TargetType="Button" x:Key="WarningButton">
+                <Setter Property="BackgroundColor" Value="{StaticResource WarningColor}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="15,10" />
+            </Style>
+
+            <Style TargetType="Button" x:Key="DangerButton">
+                <Setter Property="BackgroundColor" Value="{StaticResource DangerColor}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="15,10" />
+            </Style>
+            
+            <Style TargetType="Button" BasedOn="{StaticResource PrimaryButton}" />
+
+            <!-- Frame Style -->
+            <Style TargetType="Frame" x:Key="CardStyle">
+                <Setter Property="BorderColor" Value="#DDDDDD" />
+                <Setter Property="BackgroundColor" Value="{StaticResource SurfaceColor}" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="15" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="HasShadow" Value="True" />
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

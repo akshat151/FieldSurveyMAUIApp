@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:FieldSurveyMAUIApp.Converters"
+             xmlns:viewmodel="clr-namespace:FieldSurveyMAUIApp.ViewModels"
+             x:Class="FieldSurveyMAUIApp.Views.SurveyPage"
+             Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:QuestionTemplateSelector x:Key="QuestionTemplateSelector">
+                <converters:QuestionTemplateSelector.TextTemplate>
+                    <DataTemplate x:DataType="viewmodel:QuestionViewModel">
+                        <Frame Margin="10" Padding="15" BorderColor="LightGray" CornerRadius="8" BackgroundColor="#F5F5F5">
+                            <VerticalStackLayout Spacing="10">
+                                <Label Text="{Binding Question.Text}" FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"/>
+                                <Entry Text="{Binding Answer}" Placeholder="Enter text..." />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </converters:QuestionTemplateSelector.TextTemplate>
+                
+                <converters:QuestionTemplateSelector.NumberTemplate>
+                    <DataTemplate x:DataType="viewmodel:QuestionViewModel">
+                        <Frame Margin="10" Padding="15" BorderColor="LightGray" CornerRadius="8" BackgroundColor="#F5F5F5">
+                            <VerticalStackLayout Spacing="10">
+                                <Label Text="{Binding Question.Text}" FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"/>
+                                <Entry Text="{Binding Answer}" Placeholder="Enter number..." Keyboard="Numeric" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </converters:QuestionTemplateSelector.NumberTemplate>
+                
+                <converters:QuestionTemplateSelector.DateTemplate>
+                    <DataTemplate x:DataType="viewmodel:QuestionViewModel">
+                        <Frame Margin="10" Padding="15" BorderColor="LightGray" CornerRadius="8" BackgroundColor="#F5F5F5">
+                            <VerticalStackLayout Spacing="10">
+                                <Label Text="{Binding Question.Text}" FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"/>
+                                <DatePicker Date="{Binding Answer, Converter={StaticResource StringToDateConverter}}" Format="MMM d, yyyy" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </converters:QuestionTemplateSelector.DateTemplate>
+                
+                <converters:QuestionTemplateSelector.ChoiceTemplate>
+                    <DataTemplate x:DataType="viewmodel:QuestionViewModel">
+                        <Frame Margin="10" Padding="15" BorderColor="LightGray" CornerRadius="8" BackgroundColor="#F5F5F5">
+                            <VerticalStackLayout Spacing="10">
+                                <Label Text="{Binding Question.Text}" FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"/>
+                                <Picker ItemsSource="{Binding Question.Choices}" 
+                                        ItemDisplayBinding="{Binding Label}"
+                                        SelectedItem="{Binding Answer, Converter={StaticResource StringToChoiceConverter}, ConverterParameter={Binding Question.Choices}}" 
+                                        Title="Select an option"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </converters:QuestionTemplateSelector.ChoiceTemplate>
+                
+                <converters:QuestionTemplateSelector.LocationTemplate>
+                    <DataTemplate x:DataType="viewmodel:QuestionViewModel">
+                        <Frame Margin="10" Padding="15" BorderColor="LightGray" CornerRadius="8" BackgroundColor="#F5F5F5">
+                            <VerticalStackLayout Spacing="10">
+                                <Label Text="{Binding Question.Text}" FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"/>
+                                <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
+                                    <Entry Grid.Column="0" Text="{Binding Answer}" IsReadOnly="True" Placeholder="Tap button to capture location" />
+                                    <Button Grid.Column="1" Text="📍 Capture" 
+                                            BackgroundColor="#512BD4"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SurveyViewModel}}, Path=GetLocationCommand}"
+                                            CommandParameter="{Binding .}" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </converters:QuestionTemplateSelector.LocationTemplate>
+            </converters:QuestionTemplateSelector>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="10">
+        <!-- Survey title and description -->
+        <VerticalStackLayout Grid.Row="0" Margin="10">
+            <Label Text="{Binding Survey.Title}" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+            <Label Text="{Binding Survey.Description}" FontSize="16" HorizontalOptions="Center" Margin="0,5,0,10" />
+        </VerticalStackLayout>
+    
+        <!-- Activity indicator while loading -->
+        <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+        
+        <!-- Error message if needed -->
+        <Label Grid.Row="1" Text="{Binding ErrorMessage}" 
+               IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}"
+               TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
+        
+        <!-- Survey Questions List -->
+        <ScrollView Grid.Row="1">
+            <CollectionView ItemsSource="{Binding Questions}" 
+                            ItemTemplate="{StaticResource QuestionTemplateSelector}"
+                            Margin="0,10">
+                <CollectionView.EmptyView>
+                    <Label Text="No questions available" 
+                           HorizontalOptions="Center" VerticalOptions="Center"
+                           FontSize="16" TextColor="Gray" />
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </ScrollView>
+
+        <!-- Submit Button -->
+        <Button Grid.Row="2" Text="Submit Report" Margin="20,10" FontSize="16"
+                BackgroundColor="#512BD4"
+                Command="{Binding SubmitCommand}"
+                IsEnabled="{Binding IsNotBusy}"/>
+    </Grid>
+</ContentPage>

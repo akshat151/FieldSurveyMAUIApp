@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FieldSurveyMAUIApp.Views.FilledSurveysPage"
+             xmlns:viewmodel="clr-namespace:FieldSurveyMAUIApp.ViewModels"
+             Title="{Binding Title}">
+
+    <Grid RowDefinitions="Auto,*" Padding="10">
+        <!-- Header with refresh button -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,10">
+            <Label Text="Disaster Survey Reports" FontSize="24" FontAttributes="Bold" VerticalOptions="Center"/>
+            <Button Grid.Column="1" Text="Refresh" Command="{Binding LoadResponsesCommand}"/>
+        </Grid>
+        
+        <Grid Grid.Row="1">
+            <!-- Shows when loading responses -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+
+            <!-- Error message if needed -->
+            <Label Text="{Binding ErrorMessage}" 
+                   IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}"
+                   TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
+
+            <!-- Survey responses list -->
+            <CollectionView ItemsSource="{Binding Responses}">
+                <CollectionView.EmptyView>
+                    <Label Text="No survey responses available" 
+                           HorizontalOptions="Center" VerticalOptions="Center"
+                           FontSize="16" TextColor="Gray" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodel:SurveyResponseViewModel">
+                        <Frame Margin="5" Padding="10" BorderColor="LightGray" CornerRadius="8">
+                            <Grid RowDefinitions="Auto,Auto,*" RowSpacing="5">
+                                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="{Binding SurveyId, StringFormat='Survey ID: {0}'}" 
+                                           FontAttributes="Bold"/>
+                                    <Label Grid.Column="1" Text="{Binding SubmissionDate}" 
+                                           FontSize="Small" TextColor="Gray"/>
+                                </Grid>
+                                
+                                <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="LightGray" 
+                                         HorizontalOptions="FillAndExpand" Margin="0,5"/>
+                                
+                                <CollectionView Grid.Row="2" ItemsSource="{Binding Items}" 
+                                               HeightRequest="150" SelectionMode="None">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="viewmodel:ResponseItemViewModel">
+                                            <Grid Padding="5" ColumnDefinitions="Auto,*">
+                                                <Label Grid.Column="0" Text="{Binding QuestionId}" 
+                                                       FontAttributes="Bold" Margin="0,0,10,0"/>
+                                                <Label Grid.Column="1" Text="{Binding Value}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Grid>
+
+</ContentPage>
