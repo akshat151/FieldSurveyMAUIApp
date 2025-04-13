@@ -22,7 +22,7 @@ namespace FieldSurveyMAUIApp.ViewModels
         {
             _surveyService = surveyService;
             _dispatcher = dispatcher;
-            Title = "Available Disaster Surveys";
+            Title = "Available Disaster Reporting Surveys";
             LoadSurveysCommand = new Command(async () => await LoadSurveysAsync());
             SelectSurveyCommand = new Command<Survey>(async (survey) => await OnSurveySelected(survey));
         }

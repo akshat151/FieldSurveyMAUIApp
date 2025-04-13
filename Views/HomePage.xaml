@@ -9,7 +9,6 @@
     <Grid RowDefinitions="Auto, *" Padding="10">
         <!-- Header with refresh and view responses buttons -->
         <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto" Margin="0,0,0,10">
-            <Label Text="Disaster Reporting Surveys" FontSize="24" FontAttributes="Bold" VerticalOptions="Center"/>
             <Button Grid.Column="1" Text="Refresh" Command="{Binding LoadSurveysCommand}" Margin="0,0,10,0"/>
             <Button Grid.Column="2" Text="View Reports" 
                     Clicked="OnViewResponsesClicked"/>

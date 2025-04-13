@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FieldSurveyMAUIApp.Views.FilledSurveysPage"
              xmlns:viewmodel="clr-namespace:FieldSurveyMAUIApp.ViewModels"
+             x:DataType="viewmodel:FilledSurveysViewModel"
              Title="{Binding Title}">
 
     <Grid RowDefinitions="Auto,*" Padding="10">
