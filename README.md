@@ -39,15 +39,96 @@ FieldSurveyMAUIApp/
 └── Converters/           # Value converters for UI
 ```
 
+### Architecture Diagram
+
+```mermaid
+graph TD
+    subgraph "UI Layer"
+        A[App.xaml] --> B[AppShell.xaml]
+        B --> V1[LoginPage]
+        B --> V2[HomePage]
+        B --> V3[SurveyPage]
+        B --> V4[FilledSurveysPage]
+    end
+
+    subgraph "ViewModel Layer"
+        V1 --> VM1[LoginViewModel]
+        V2 --> VM2[HomeViewModel]
+        V3 --> VM3[SurveyViewModel]
+        V4 --> VM4[FilledSurveysViewModel]
+        
+        VM1 & VM2 & VM3 & VM4 --> VMB[BaseViewModel]
+    end
+
+    subgraph "Service Layer"
+        VM1 & VM2 --> S1[AuthService]
+        VM2 & VM3 & VM4 --> S2[SurveyService]
+        
+        S1 --> I1[IAuthService]
+        S2 --> I2[ISurveyService]
+    end
+    
+    subgraph "Model Layer"
+        S2 --> M1[Survey]
+        M1 --> M2[Question]
+        S2 --> M3[SurveyResponse]
+    end
+    
+    subgraph "Platform Specific"
+        P1[iOS]
+        P2[Android]
+        P3[MacCatalyst]
+        P4[Windows]
+    end
+
+    %% Dependency Injection
+    MP[MauiProgram.cs] --> S1 & S2
+    MP --> VM1 & VM2 & VM3 & VM4
+    MP --> V1 & V2 & V3 & V4
+    
+    %% Templates and Converters
+    C1[QuestionTemplateSelector] --> V3
+    C2[ValueConverters] --> V1 & V2 & V3 & V4
+    
+    %% External API
+    S2 <--> API[External Survey API]
+    
+    classDef viewModels fill:#f9f,stroke:#333,stroke-width:2px
+    classDef services fill:#bbf,stroke:#333,stroke-width:1px
+    classDef models fill:#bfb,stroke:#333,stroke-width:1px
+    classDef views fill:#fbb,stroke:#333,stroke-width:1px
+    
+    class VM1,VM2,VM3,VM4,VMB viewModels
+    class S1,S2,I1,I2 services
+    class M1,M2,M3 models
+    class V1,V2,V3,V4,A,B views
+```
+
 ---
 
 ## 📱 APP SCREENSHOTS
 
-| Login Screen | Survey List | Survey Form |
-|-------------|------------|-------------|
-| ![Login](./screenshots/login.png) | ![Surveys](./screenshots/surveys.png) | ![Survey Form](./screenshots/survey-form.png) |
+### iOS Screenshots
+| Login Screen | Survey List | Survey Form | Location Capture |
+|-------------|-------------|-------------|-----------------|
+| ![iOS Login](./screenshots/ios_login.png) | ![iOS Surveys](./screenshots/ios_surveys.png) | ![iOS Survey Form](./screenshots/ios_survey_form.png) | ![iOS Location](./screenshots/ios_location.png) |
 
-> Note: Replace placeholder images with actual screenshots of your application
+### Android Screenshots
+| Login Screen | Survey List | Survey Form | Location Capture |
+|-------------|-------------|-------------|-----------------|
+| ![Android Login](./screenshots/android_login.png) | ![Android Surveys](./screenshots/android_surveys.png) | ![Android Survey Form](./screenshots/android_survey_form.png) | ![Android Location](./screenshots/android_location.png) |
+
+### macOS Screenshots
+| Login Screen | Survey List | Survey Form | Location Capture |
+|-------------|-------------|-------------|-----------------|
+| ![macOS Login](./screenshots/macos_login.png) | ![macOS Surveys](./screenshots/macos_surveys.png) | ![macOS Survey Form](./screenshots/macos_survey_form.png) | ![macOS Location](./screenshots/macos_location.png) |
+
+### Completed Surveys View
+| iOS | Android | macOS |
+|-----|---------|-------|
+| ![iOS Completed](./screenshots/ios_completed.png) | ![Android Completed](./screenshots/android_completed.png) | ![macOS Completed](./screenshots/macos_completed.png) |
+
+> **Note:** Place your actual application screenshots in the `/screenshots` directory using the naming convention shown above.
 
 ---
 
