@@ -67,8 +67,6 @@ FieldSurveyMAUIApp/
 |-----|---------|-------|
 | ![iOS Completed](./screenshots/ios_completed.png) | ![Android Completed](./screenshots/android_completed.png) | ![macOS Completed](./screenshots/macos_completed.png) |
 
-> **Note:** Place your actual application screenshots in the `/screenshots` directory using the naming convention shown above.
-
 ---
 
 ## 🛠️ PROJECT STRUCTURE
