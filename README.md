@@ -99,7 +99,7 @@ FieldSurveyMAUIApp/
 
 ### Prerequisites
 - .NET 9.0 SDK
-- Visual Studio 2022 or Visual Studio for Mac (with .NET MAUI workload)
+- Visual Studio 2022 or VS Code for Mac (with .NET MAUI workload)
 - Android SDK for Android development
 - Xcode (for iOS/macOS development)
 
