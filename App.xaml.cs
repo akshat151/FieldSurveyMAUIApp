@@ -1,4 +1,7 @@
-﻿using FieldSurveyMAUIApp.Services.Interfaces;
+﻿// Copyright (c) 2025 Akshat Khare
+// Licensed under the MIT License. See LICENSE file in the project root for full license information.
+
+using FieldSurveyMAUIApp.Services.Interfaces;
 using Microsoft.Maui.Controls;
 
 namespace FieldSurveyMAUIApp
