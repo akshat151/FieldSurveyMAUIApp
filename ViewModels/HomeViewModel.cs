@@ -13,18 +13,22 @@ namespace FieldSurveyMAUIApp.ViewModels
     {
         private readonly ISurveyService _surveyService;
         private readonly IDispatcher _dispatcher;
+        private readonly IAuthService _authService;
 
         public ObservableCollection<Survey> Surveys { get; } = new ObservableCollection<Survey>();
         public ICommand LoadSurveysCommand { get; }
         public ICommand SelectSurveyCommand { get; }
+        public ICommand LogoutCommand { get; }
 
-        public HomeViewModel(ISurveyService surveyService, IDispatcher dispatcher)
+        public HomeViewModel(ISurveyService surveyService, IDispatcher dispatcher, IAuthService authService)
         {
             _surveyService = surveyService;
             _dispatcher = dispatcher;
+            _authService = authService;
             Title = "Available Disaster Reporting Surveys";
             LoadSurveysCommand = new Command(async () => await LoadSurveysAsync());
             SelectSurveyCommand = new Command<Survey>(async (survey) => await OnSurveySelected(survey));
+            LogoutCommand = new Command(async () => await LogoutAsync());
         }
 
         private async Task LoadSurveysAsync()
@@ -65,6 +69,12 @@ namespace FieldSurveyMAUIApp.ViewModels
 
             // Navigate to survey page and pass survey ID as parameter
             await Shell.Current.GoToAsync($"survey?id={survey.Id}");
+        }
+
+        private async Task LogoutAsync()
+        {
+            _authService.Logout();
+            await Shell.Current.GoToAsync("//login");
         }
     }
 }

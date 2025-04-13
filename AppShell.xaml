@@ -29,7 +29,7 @@
     <ShellContent
         Route="login"
         ContentTemplate="{DataTemplate views:LoginPage}"
-        Title="Login" />
+        Title="" />
 
     <!-- Main routes -->
     <TabBar Route="main">

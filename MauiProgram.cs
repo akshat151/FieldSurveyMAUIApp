@@ -30,7 +30,8 @@ namespace FieldSurveyMAUIApp
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<HomeViewModel>(provider => new HomeViewModel(
                 provider.GetRequiredService<ISurveyService>(),
-                provider.GetRequiredService<IDispatcher>()
+                provider.GetRequiredService<IDispatcher>(),
+                provider.GetRequiredService<IAuthService>()
             ));
             builder.Services.AddTransient<SurveyViewModel>(provider => new SurveyViewModel(
                 provider.GetRequiredService<ISurveyService>(),

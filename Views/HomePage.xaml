@@ -7,11 +7,15 @@
              Title="{Binding Title}">
 
     <Grid RowDefinitions="Auto, *" Padding="10">
-        <!-- Header with refresh and view responses buttons -->
-        <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto" Margin="0,0,0,10">
+        <!-- Header with refresh, view responses and logout buttons -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto,Auto" Margin="0,0,0,10">
             <Button Grid.Column="1" Text="Refresh" Command="{Binding LoadSurveysCommand}" Margin="0,0,10,0"/>
             <Button Grid.Column="2" Text="View Reports" 
-                    Clicked="OnViewResponsesClicked"/>
+                    Clicked="OnViewResponsesClicked" Margin="0,0,10,0"/>
+            <Button Grid.Column="3" Text="Logout" 
+                    Command="{Binding LogoutCommand}" 
+                    BackgroundColor="#E74C3C"
+                    TextColor="White"/>
         </Grid>
         
         <Grid Grid.Row="1">
