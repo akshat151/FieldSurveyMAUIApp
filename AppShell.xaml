@@ -6,20 +6,21 @@
     xmlns:views="clr-namespace:FieldSurveyMAUIApp.Views"
     Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="True"
-    Shell.TabBarIsVisible="True"
-    Shell.TabBarBackgroundColor="{StaticResource PrimaryColor}"
+    Shell.TabBarIsVisible="False"
+    Shell.TabBarBackgroundColor="{AppThemeBinding Light=#512BD4, Dark=#9A78DD}"
     Shell.TabBarTitleColor="White"
-    Shell.TabBarUnselectedColor="#DFD8F7"
+    Shell.TabBarUnselectedColor="{AppThemeBinding Light=#DFD8F7, Dark=#60589E}"
     Title="Disaster Survey Reporter">
 
     <Shell.Resources>
         <ResourceDictionary>
+            <!-- Base styling using explicit adaptive theme bindings -->
             <Style x:Key="BaseStyle" TargetType="Element">
-                <Setter Property="Shell.BackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light=#512BD4, Dark=#9A78DD}" />
                 <Setter Property="Shell.ForegroundColor" Value="White" />
                 <Setter Property="Shell.TitleColor" Value="White" />
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
-                <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Light=#95FFFFFF, Dark=#95FFFFFF}" />
             </Style>
             <Style TargetType="ShellItem" BasedOn="{StaticResource BaseStyle}" />
         </ResourceDictionary>
@@ -31,21 +32,16 @@
         ContentTemplate="{DataTemplate views:LoginPage}"
         Title="" />
 
-    <!-- Main routes -->
-    <TabBar Route="main">
-        <Tab Title="Surveys" Icon="dotnet_bot.png">
-            <ShellContent
-                Route="home"
-                ContentTemplate="{DataTemplate views:HomePage}"
-                Title="Available Surveys" />
-        </Tab>
-        <Tab Title="Reports" Icon="dotnet_bot.png">
-            <ShellContent
-                Route="responses"
-                ContentTemplate="{DataTemplate views:FilledSurveysPage}"
-                Title="Submitted Reports" />
-        </Tab>
-    </TabBar>
+    <!-- Individual routes -->
+    <ShellContent
+        Route="home"
+        ContentTemplate="{DataTemplate views:HomePage}"
+        Title="Available Surveys" />
+        
+    <ShellContent
+        Route="responses"
+        ContentTemplate="{DataTemplate views:FilledSurveysPage}"
+        Title="Submitted Reports" />
 
     <!-- Modal route for survey form -->
     <ShellContent

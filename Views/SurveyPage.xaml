@@ -11,65 +11,105 @@
             <converters:QuestionTemplateSelector x:Key="QuestionTemplateSelector">
                 <converters:QuestionTemplateSelector.TextTemplate>
                     <DataTemplate x:DataType="viewmodel:QuestionViewModel">
-                        <Frame Margin="10" Padding="15" BorderColor="LightGray" CornerRadius="8" BackgroundColor="#F5F5F5">
+                        <!-- Replacing Frame with Border using StrokeShape for rounded corners -->
+                        <Border Margin="10" Padding="15"
+                                Stroke="LightGray" StrokeThickness="1"
+                                Background="{AppThemeBinding Light=#F5F5F5, Dark=#333333}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
                             <VerticalStackLayout Spacing="10">
-                                <Label Text="{Binding Question.Text}" FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"/>
+                                <Label Text="{Binding Question.Text}" 
+                                       FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"
+                                       TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
                                 <Entry Text="{Binding Answer}" Placeholder="Enter text..." />
                             </VerticalStackLayout>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </converters:QuestionTemplateSelector.TextTemplate>
                 
+                <!-- Repeat similar changes for the Number, Date, Choice, and Location templates -->
                 <converters:QuestionTemplateSelector.NumberTemplate>
                     <DataTemplate x:DataType="viewmodel:QuestionViewModel">
-                        <Frame Margin="10" Padding="15" BorderColor="LightGray" CornerRadius="8" BackgroundColor="#F5F5F5">
+                        <Border Margin="10" Padding="15"
+                                Stroke="LightGray" StrokeThickness="1"
+                                Background="{AppThemeBinding Light=#F5F5F5, Dark=#333333}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
                             <VerticalStackLayout Spacing="10">
-                                <Label Text="{Binding Question.Text}" FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"/>
+                                <Label Text="{Binding Question.Text}" 
+                                       FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"
+                                       TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
                                 <Entry Text="{Binding Answer}" Placeholder="Enter number..." Keyboard="Numeric" />
                             </VerticalStackLayout>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </converters:QuestionTemplateSelector.NumberTemplate>
                 
                 <converters:QuestionTemplateSelector.DateTemplate>
                     <DataTemplate x:DataType="viewmodel:QuestionViewModel">
-                        <Frame Margin="10" Padding="15" BorderColor="LightGray" CornerRadius="8" BackgroundColor="#F5F5F5">
+                        <Border Margin="10" Padding="15"
+                                Stroke="LightGray" StrokeThickness="1"
+                                Background="{AppThemeBinding Light=#F5F5F5, Dark=#333333}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
                             <VerticalStackLayout Spacing="10">
-                                <Label Text="{Binding Question.Text}" FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"/>
-                                <DatePicker Date="{Binding Answer, Converter={StaticResource StringToDateConverter}}" Format="MMM d, yyyy" />
+                                <Label Text="{Binding Question.Text}" 
+                                       FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"
+                                       TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
+                                <DatePicker Date="{Binding Answer, Converter={StaticResource StringToDateConverter}}" 
+                                            Format="MMM d, yyyy" />
                             </VerticalStackLayout>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </converters:QuestionTemplateSelector.DateTemplate>
                 
                 <converters:QuestionTemplateSelector.ChoiceTemplate>
                     <DataTemplate x:DataType="viewmodel:QuestionViewModel">
-                        <Frame Margin="10" Padding="15" BorderColor="LightGray" CornerRadius="8" BackgroundColor="#F5F5F5">
+                        <Border Margin="10" Padding="15"
+                                Stroke="LightGray" StrokeThickness="1"
+                                Background="{AppThemeBinding Light=#F5F5F5, Dark=#333333}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
                             <VerticalStackLayout Spacing="10">
-                                <Label Text="{Binding Question.Text}" FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"/>
+                                <Label Text="{Binding Question.Text}" 
+                                       FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"
+                                       TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
                                 <Picker ItemsSource="{Binding Question.Choices}" 
                                         ItemDisplayBinding="{Binding Label}"
                                         SelectedItem="{Binding Answer, Converter={StaticResource StringToChoiceConverter}, ConverterParameter={Binding Question.Choices}}" 
                                         Title="Select an option"/>
                             </VerticalStackLayout>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </converters:QuestionTemplateSelector.ChoiceTemplate>
                 
                 <converters:QuestionTemplateSelector.LocationTemplate>
                     <DataTemplate x:DataType="viewmodel:QuestionViewModel">
-                        <Frame Margin="10" Padding="15" BorderColor="LightGray" CornerRadius="8" BackgroundColor="#F5F5F5">
+                        <Border Margin="10" Padding="15"
+                                Stroke="LightGray" StrokeThickness="1"
+                                Background="{AppThemeBinding Light=#F5F5F5, Dark=#333333}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
                             <VerticalStackLayout Spacing="10">
-                                <Label Text="{Binding Question.Text}" FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"/>
+                                <Label Text="{Binding Question.Text}" 
+                                       FontAttributes="{Binding Question.Required, Converter={StaticResource BoolToFontAttributesConverter}}"
+                                       TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
                                 <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
-                                    <Entry Grid.Column="0" Text="{Binding Answer}" IsReadOnly="True" Placeholder="Tap button to capture location" />
+                                    <Entry Grid.Column="0" Text="{Binding Answer}" 
+                                           IsReadOnly="True" 
+                                           Placeholder="Tap button to capture location" />
                                     <Button Grid.Column="1" Text="📍 Capture" 
                                             BackgroundColor="#512BD4"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SurveyViewModel}}, Path=GetLocationCommand}"
                                             CommandParameter="{Binding .}" />
                                 </Grid>
                             </VerticalStackLayout>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </converters:QuestionTemplateSelector.LocationTemplate>
             </converters:QuestionTemplateSelector>

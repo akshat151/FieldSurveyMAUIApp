@@ -5,63 +5,84 @@
              xmlns:viewmodel="clr-namespace:FieldSurveyMAUIApp.ViewModels"
              xmlns:model="clr-namespace:FieldSurveyMAUIApp.Models"
              Title="{Binding Title}">
-
+    
     <Grid RowDefinitions="Auto, *" Padding="10">
-        <!-- Header with refresh, view responses and logout buttons -->
+        <!-- Header with refresh, view reports and logout buttons -->
         <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto,Auto" Margin="0,0,0,10">
-            <Button Grid.Column="1" Text="Refresh" Command="{Binding LoadSurveysCommand}" Margin="0,0,10,0"/>
-            <Button Grid.Column="2" Text="View Reports" 
-                    Clicked="OnViewResponsesClicked" Margin="0,0,10,0"/>
-            <Button Grid.Column="3" Text="Logout" 
-                    Command="{Binding LogoutCommand}" 
+            <Button Grid.Column="1"
+                    Text="Refresh"
+                    Command="{Binding LoadSurveysCommand}"
+                    Margin="0,0,10,0"
+                    TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
+            <Button Grid.Column="2"
+                    Text="View Reports"
+                    Clicked="OnViewResponsesClicked"
+                    Margin="0,0,10,0"
+                    TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
+            <Button Grid.Column="3"
+                    Text="Logout"
+                    Command="{Binding LogoutCommand}"
                     BackgroundColor="#E74C3C"
-                    TextColor="White"/>
+                    TextColor="{AppThemeBinding Light=#FFFFFF, Dark=#FFFFFF}" />
         </Grid>
-        
+
+        <!-- Survey grid with two columns -->
         <Grid Grid.Row="1">
-            <!-- Shows when loading surveys -->
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
-                           HorizontalOptions="Center" VerticalOptions="Center" />
-
-            <!-- Error message if needed -->
-            <Label Text="{Binding ErrorMessage}" 
+            <CollectionView ItemsSource="{Binding Surveys}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                     Span="2"
+                                     HorizontalItemSpacing="10"
+                                     VerticalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Survey">
+                        <!-- Replacing Frame with Border and using AppThemeBinding for Background -->
+                        <Border Margin="10" Padding="15" WidthRequest="175" HeightRequest="200"
+                                Stroke="LightGray" StrokeThickness="1"
+                                Background="{AppThemeBinding Light=#FFFFFF, Dark=#3A3A3A}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomeViewModel}}, Path=SelectSurveyCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <Grid RowDefinitions="*, Auto" RowSpacing="10">
+                                <!-- Survey Image -->
+                                <Image Grid.Row="0"
+                                       Source="{Binding ImageUrl}"
+                                       Aspect="AspectFill"
+                                       HeightRequest="100" />
+                                <!-- Survey Details -->
+                                <VerticalStackLayout Grid.Row="1" Spacing="5">
+                                    <Label Text="{Binding Title}"
+                                           FontAttributes="Bold"
+                                           LineBreakMode="TailTruncation"
+                                           TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
+                                    <Label Text="{Binding Description}"
+                                           FontSize="Small"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="2"
+                                           TextColor="{AppThemeBinding Light=#4A4A4A, Dark=#C0C0C0}" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+            <!-- Loading and error overlays -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+            <Label Text="{Binding ErrorMessage}"
                    IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}"
-                   TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center" />
-
-            <!-- Survey grid - two columns -->
-            <ScrollView>
-                <FlexLayout Wrap="Wrap" 
-                            JustifyContent="SpaceAround"
-                            BindableLayout.ItemsSource="{Binding Surveys}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="model:Survey">
-                            <Frame Margin="5" Padding="10" WidthRequest="175" HeightRequest="200"
-                                   BorderColor="LightGray" CornerRadius="10"
-                                   BackgroundColor="White">
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer 
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomeViewModel}}, Path=SelectSurveyCommand}"
-                                        CommandParameter="{Binding .}" />
-                                </Frame.GestureRecognizers>
-                                <Grid RowDefinitions="*, Auto" RowSpacing="10">
-                                    <!-- Survey Image -->
-                                    <Image Grid.Row="0" Source="{Binding ImageUrl}" 
-                                           Aspect="AspectFill" HeightRequest="100"/>
-                                    
-                                    <!-- Survey Details -->
-                                    <VerticalStackLayout Grid.Row="1" Spacing="5">
-                                        <Label Text="{Binding Title}" FontAttributes="Bold" 
-                                               LineBreakMode="TailTruncation" />
-                                        <Label Text="{Binding Description}" 
-                                               FontSize="Small" LineBreakMode="TailTruncation" MaxLines="2" />
-                                    </VerticalStackLayout>
-                                </Grid>
-                            </Frame>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </FlexLayout>
-            </ScrollView>
+                   TextColor="Red"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
         </Grid>
     </Grid>
-
 </ContentPage>

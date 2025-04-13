@@ -4,67 +4,63 @@
              x:Class="FieldSurveyMAUIApp.Views.LoginPage"
              xmlns:viewmodel="clr-namespace:FieldSurveyMAUIApp.ViewModels"
              Title="{Binding Title}">
-
+             
     <Grid RowDefinitions="Auto,*" RowSpacing="20" Padding="20">
-        <Image 
-            Grid.Row="0"
-            Source="dotnet_bot.png"
-            HeightRequest="150"
-            WidthRequest="150"
-            HorizontalOptions="Center"/>
+        <!-- Logo Image -->
+        <Image Grid.Row="0"
+               Source="dotnet_bot.png"
+               HeightRequest="150"
+               WidthRequest="150"
+               HorizontalOptions="Center"/>
             
-        <VerticalStackLayout
-            Grid.Row="1"
-            Spacing="25"
-            VerticalOptions="Center">
-
-            <Label 
-                Text="Disaster Survey Reporter"
-                FontSize="28"
-                FontAttributes="Bold"
-                HorizontalOptions="Center" />
+        <VerticalStackLayout Grid.Row="1" Spacing="25" VerticalOptions="Center">
+            <!-- App Title -->
+            <Label Text="Disaster Survey Reporter"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
                 
-            <Frame 
-                BorderColor="Gray"
-                CornerRadius="8"
-                Padding="15">
-                
+            <!-- Replacing Frame with Border and applying adaptive Background -->
+            <Border Margin="10" Padding="15"
+                    Stroke="Gray" StrokeThickness="1"
+                    Background="{AppThemeBinding Light=#F5F5F5, Dark=#333333}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8"/>
+                </Border.StrokeShape>
                 <VerticalStackLayout Spacing="15">
-                    <Label 
-                        Text="{Binding ErrorMessage}" 
-                        IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}"
-                        TextColor="Red"
-                        HorizontalOptions="Center" />
+                    <Label Text="{Binding ErrorMessage}" 
+                           IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}"
+                           TextColor="Red"
+                           HorizontalOptions="Center" />
                     
-                    <Entry 
-                        Placeholder="Username"
-                        Text="{Binding Username}" />
+                    <Entry Placeholder="Username"
+                           Text="{Binding Username}" />
                     
-                    <Entry 
-                        Placeholder="Password"
-                        IsPassword="True"
-                        Text="{Binding Password}" />
+                    <Entry Placeholder="Password"
+                           IsPassword="True"
+                           Text="{Binding Password}" />
                     
-                    <Button 
-                        Text="Login"
-                        Command="{Binding LoginCommand}"
-                        IsEnabled="{Binding IsNotBusy}"
-                        HorizontalOptions="Center"
-                        WidthRequest="150"/>
+                    <Button Text="Login"
+                            Command="{Binding LoginCommand}"
+                            IsEnabled="{Binding IsNotBusy}"
+                            HorizontalOptions="Center"
+                            WidthRequest="150"
+                            BackgroundColor="#E74C3C"
+                            TextColor="{AppThemeBinding Light=#FFFFFF, Dark=#FFFFFF}" />
                     
-                    <ActivityIndicator 
-                        IsRunning="{Binding IsBusy}"
-                        IsVisible="{Binding IsBusy}"
-                        HorizontalOptions="Center" />
+                    <!-- Activity Indicator -->
+                    <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                       IsVisible="{Binding IsBusy}"
+                                       HorizontalOptions="Center" />
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
             
-            <Label 
-                Text="Use admin/admin to login"
-                FontSize="Small"
-                TextColor="Gray"
-                HorizontalOptions="Center"/>
+            <!-- Login helper text -->
+            <Label Text="Use admin/admin to login"
+                   FontSize="Small"
+                   TextColor="Gray"
+                   HorizontalOptions="Center" />
         </VerticalStackLayout>
     </Grid>
-
 </ContentPage>

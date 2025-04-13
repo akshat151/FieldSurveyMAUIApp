@@ -1,4 +1,4 @@
-﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FieldSurveyMAUIApp"
@@ -56,14 +56,19 @@
             
             <Style TargetType="Button" BasedOn="{StaticResource PrimaryButton}" />
 
-            <!-- Frame Style -->
-            <Style TargetType="Frame" x:Key="CardStyle">
-                <Setter Property="BorderColor" Value="#DDDDDD" />
-                <Setter Property="BackgroundColor" Value="{StaticResource SurfaceColor}" />
-                <Setter Property="CornerRadius" Value="8" />
+            <!-- Border Style (replacing obsolete Frame style) -->
+            <Style TargetType="Border" x:Key="CardStyle">
+                <Setter Property="Stroke" Value="#DDDDDD" />
+                <Setter Property="Background" Value="{StaticResource SurfaceColor}" />
+                <Setter Property="StrokeThickness" Value="1" />
                 <Setter Property="Padding" Value="15" />
                 <Setter Property="Margin" Value="5" />
-                <Setter Property="HasShadow" Value="True" />
+                <!-- Note: Border does not support HasShadow. Use platform-specific shadow effects if required -->
+                <Setter Property="StrokeShape">
+                    <Setter.Value>
+                        <RoundRectangle CornerRadius="8" />
+                    </Setter.Value>
+                </Setter>
             </Style>
 
         </ResourceDictionary>
