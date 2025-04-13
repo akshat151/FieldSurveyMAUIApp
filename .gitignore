@@ -1,0 +1,95 @@
+# .NET MAUI specific
+bin/
+obj/
+.vs/
+.idea/
+.vscode/
+**/[Bb]in/
+**/[Oo]bj/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# NuGet
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+# except build/, which is used as an MSBuild target.
+!**/packages/build/
+
+# Xamarin.Android
+Resources/Resource.designer.cs
+**/*.apk
+**/*.aab
+**/*.dll.so
+**/*.dll.mdb
+**/android/assets/
+
+# Xamarin.iOS / macOS
+**/ios-build/
+**/*.ipa
+**/*.dSYM.zip
+**/*.dSYM
+**/ApiDefinition.cs
+**/StructsAndEnums.cs
+**/macOS
+
+# macOS
+.DS_Store
+*.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Log files
+*.log
+
+# Cache files
+.cache/
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Generate files
+Generated_Code/
+
+# MAUI specific
+.mfractor/
+.localconfig
+appcenter-build/
+**/[Bb]uild/*
+**/[Dd]ebug/*
+**/[Rr]elease/*
+**/.idea/*
+**/*.sln.DotSettings.user
+**/*.userprefs
+**/*.user
+**/*.suo
+**/*.tmp
+**/*.vspscc
+**/*.vssscc
+**/*~
+**/AndroidManifest.xml.backup
+
+# Visual Studio for Mac
+.vscode/
+.idea/
+mono_crash.*
