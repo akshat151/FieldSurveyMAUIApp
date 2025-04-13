@@ -144,6 +144,44 @@ FieldSurveyMAUIApp/
 
 ---
 
+## 🌐 BACKEND INFRASTRUCTURE
+
+The application connects to a RESTful API backend built with Python and hosted on PythonAnywhere.
+
+### Backend Architecture
+
+- **Framework**: Python with Flask/Django REST framework
+- **Hosting**: PythonAnywhere cloud platform
+- **Base URL**: `https://akshat15.pythonanywhere.com`
+
+### API Endpoints
+
+| Endpoint | Method | Description | Parameters |
+|----------|--------|-------------|------------|
+| `/api/login` | POST | User authentication | `username`, `password` |
+| `/api/surveys` | GET | List all available surveys | None |
+| `/api/surveys/{id}` | GET | Get detailed survey information | `id` (path parameter) |
+| `/api/surveys/{id}/responses` | POST | Submit a completed survey | `responses` (question-answer pairs) |
+| `/api/surveyResponses` | GET | Retrieve submitted survey responses | None |
+
+### Data Flow
+
+1. **Authentication**: Secure token-based authentication with the backend
+2. **Survey Retrieval**: The app fetches available surveys from the backend
+3. **Survey Submission**: Completed surveys are formatted and sent to the API
+4. **Response Storage**: Survey responses are securely stored in a database
+5. **Response Retrieval**: Submitted responses can be retrieved and displayed
+
+### Implementation Details
+
+The mobile app communicates with the backend using HttpClient with the following features:
+- JSON serialization/deserialization
+- Error handling with automatic retries
+- Proper formatting of complex data (like location coordinates)
+- Support for different question types in the API
+
+---
+
 ## 📋 REQUIREMENTS
 
 - **iOS**: 15.0 or later
