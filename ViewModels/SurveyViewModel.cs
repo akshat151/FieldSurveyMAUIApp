@@ -11,6 +11,10 @@ using Microsoft.Maui.Dispatching;
 
 namespace FieldSurveyMAUIApp.ViewModels
 {
+    /// <summary>
+    /// ViewModel for displaying and handling survey details and responses
+    /// Receives survey ID via Shell navigation
+    /// </summary>
     [QueryProperty(nameof(SurveyId), "id")]
     public class SurveyViewModel : BaseViewModel
     {
@@ -19,6 +23,9 @@ namespace FieldSurveyMAUIApp.ViewModels
         private string _surveyId;
         private Survey _survey;
 
+        /// <summary>
+        /// Survey ID property that triggers loading the survey when set
+        /// </summary>
         public string SurveyId
         {
             get => _surveyId;
@@ -27,22 +34,41 @@ namespace FieldSurveyMAUIApp.ViewModels
                 SetProperty(ref _surveyId, value);
                 if (!string.IsNullOrEmpty(value))
                 {
+                    // Load survey when ID is set
                     LoadSurveyAsync().ConfigureAwait(false);
                 }
             }
         }
 
+        /// <summary>
+        /// Survey details object
+        /// </summary>
         public Survey Survey
         {
             get => _survey;
             set => SetProperty(ref _survey, value);
         }
 
+        /// <summary>
+        /// Collection of question view models for the survey
+        /// </summary>
         public ObservableCollection<QuestionViewModel> Questions { get; } = new ObservableCollection<QuestionViewModel>();
         
+        /// <summary>
+        /// Command to submit the completed survey
+        /// </summary>
         public ICommand SubmitCommand { get; }
+        
+        /// <summary>
+        /// Command to get geolocation for location questions
+        /// </summary>
         public ICommand GetLocationCommand { get; }
 
+        /// <summary>
+        /// Constructor for SurveyViewModel
+        /// </summary>
+        /// <param name="surveyService">Service for survey operations</param>
+        /// <param name="dispatcher">UI dispatcher for thread-safe UI updates</param>
         public SurveyViewModel(ISurveyService surveyService, IDispatcher dispatcher)
         {
             _surveyService = surveyService;
@@ -52,10 +78,14 @@ namespace FieldSurveyMAUIApp.ViewModels
             GetLocationCommand = new Command<QuestionViewModel>(async (questionVM) => await GetLocationAsync(questionVM));
         }
 
+        /// <summary>
+        /// Loads survey details from the service
+        /// </summary>
         private async Task LoadSurveyAsync()
         {
             await ExecuteWithBusyIndicator(async () =>
             {
+                // Get survey details from service
                 var survey = await _surveyService.GetSurveyDetailsAsync(SurveyId);
 
                 _dispatcher.Dispatch(() =>
@@ -66,10 +96,12 @@ namespace FieldSurveyMAUIApp.ViewModels
                         return;
                     }
 
+                    // Update UI with survey data
                     Survey = survey;
                     Title = survey.Title;
                     Questions.Clear();
 
+                    // Create view models for each question
                     foreach (var question in survey.Questions)
                     {
                         Questions.Add(new QuestionViewModel(question));
@@ -78,10 +110,15 @@ namespace FieldSurveyMAUIApp.ViewModels
             });
         }
 
+        /// <summary>
+        /// Gets the current device location for location questions
+        /// </summary>
+        /// <param name="questionVM">The question view model to update with location data</param>
         private async Task GetLocationAsync(QuestionViewModel questionVM)
         {
             try
             {
+                // Request device location with medium accuracy
                 var location = await Microsoft.Maui.Devices.Sensors.Geolocation.Default.GetLocationAsync(
                     new Microsoft.Maui.Devices.Sensors.GeolocationRequest
                     {
@@ -91,6 +128,7 @@ namespace FieldSurveyMAUIApp.ViewModels
 
                 if (location != null)
                 {
+                    // Store location data object for submission
                     questionVM.LocationData = new LocationData
                     {
                         Latitude = location.Latitude,
@@ -99,6 +137,7 @@ namespace FieldSurveyMAUIApp.ViewModels
                         Timestamp = location.Timestamp.DateTime.ToString("o") // ISO 8601 format
                     };
 
+                    // Display coordinates in the answer field
                     questionVM.Answer = $"Lat: {location.Latitude:F6}, Long: {location.Longitude:F6}";
                 }
                 else
@@ -108,10 +147,14 @@ namespace FieldSurveyMAUIApp.ViewModels
             }
             catch (Exception ex)
             {
+                // Handle location errors
                 questionVM.Answer = $"Error: {ex.Message}";
             }
         }
 
+        /// <summary>
+        /// Submits the completed survey responses
+        /// </summary>
         private async Task SubmitSurveyAsync()
         {
             await ExecuteWithBusyIndicator(async () =>
@@ -124,22 +167,21 @@ namespace FieldSurveyMAUIApp.ViewModels
                     return;
                 }
 
-                // Build responses
+                // Build responses from question view models
                 var responses = new List<QuestionResponse>();
                 foreach (var questionVM in Questions)
                 {
-                    // Handle different types of questions
                     var response = new QuestionResponse
                     {
                         QuestionId = questionVM.Question.Id,
                         LocationData = null
                     };
 
-                    // Special handling for different question types
+                    // Handle different question types appropriately
                     switch (questionVM.Question.Type)
                     {
                         case QuestionType.Number:
-                            // Try to parse as number for correct JSON serialization
+                            // Parse number values for proper serialization
                             if (double.TryParse(questionVM.Answer, out double numValue))
                             {
                                 response.Value = numValue.ToString();
@@ -151,10 +193,12 @@ namespace FieldSurveyMAUIApp.ViewModels
                             break;
                         
                         case QuestionType.Location:
+                            // Include location data for location questions
                             response.LocationData = questionVM.LocationData;
                             break;
                         
                         default:
+                            // Text and other types
                             response.Value = questionVM.Answer;
                             break;
                     }
@@ -162,10 +206,12 @@ namespace FieldSurveyMAUIApp.ViewModels
                     responses.Add(response);
                 }
 
+                // Submit responses to service
                 bool success = await _surveyService.SubmitSurveyResponseAsync(SurveyId, responses);
 
                 if (success)
                 {
+                    // Show success message and navigate home
                     await Shell.Current.DisplayAlert("Success", "Survey response submitted successfully.", "OK");
                     await Shell.Current.GoToAsync("//home");
                 }
@@ -177,25 +223,41 @@ namespace FieldSurveyMAUIApp.ViewModels
         }
     }
 
+    /// <summary>
+    /// ViewModel for individual survey questions
+    /// </summary>
     public class QuestionViewModel : BaseViewModel
     {
         private string _answer;
         private LocationData _locationData;
 
+        /// <summary>
+        /// The question model
+        /// </summary>
         public Question Question { get; }
 
+        /// <summary>
+        /// The user's answer to the question
+        /// </summary>
         public string Answer
         {
             get => _answer;
             set => SetProperty(ref _answer, value);
         }
 
+        /// <summary>
+        /// Location data for location-type questions
+        /// </summary>
         public LocationData LocationData
         {
             get => _locationData;
             set => SetProperty(ref _locationData, value);
         }
 
+        /// <summary>
+        /// Constructor for QuestionViewModel
+        /// </summary>
+        /// <param name="question">The question model</param>
         public QuestionViewModel(Question question)
         {
             Question = question;

@@ -10,6 +10,10 @@ using FieldSurveyMAUIApp.Services.Interfaces;
 
 namespace FieldSurveyMAUIApp.Services
 {
+    /// <summary>
+    /// Provides functionality to interact with survey data from the backend API.
+    /// Handles retrieving surveys, survey details, submitting responses, and fetching previous responses.
+    /// </summary>
     public class SurveyService : ISurveyService
     {
         private readonly HttpClient _httpClient;
@@ -19,11 +23,19 @@ namespace FieldSurveyMAUIApp.Services
             PropertyNameCaseInsensitive = true
         };
 
+        /// <summary>
+        /// Initializes a new instance of the SurveyService class.
+        /// </summary>
+        /// <param name="httpClient">HttpClient for making API requests</param>
         public SurveyService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
+        /// <summary>
+        /// Retrieves a list of all available surveys from the API.
+        /// </summary>
+        /// <returns>A list of Survey objects if successful; otherwise, an empty list.</returns>
         public async Task<List<Survey>> GetSurveysAsync()
         {
             try
@@ -38,6 +50,11 @@ namespace FieldSurveyMAUIApp.Services
             }
         }
 
+        /// <summary>
+        /// Retrieves detailed information about a specific survey.
+        /// </summary>
+        /// <param name="surveyId">The unique identifier of the survey</param>
+        /// <returns>A Survey object containing survey details if successful; otherwise, null.</returns>
         public async Task<Survey> GetSurveyDetailsAsync(string surveyId)
         {
             try
@@ -52,6 +69,12 @@ namespace FieldSurveyMAUIApp.Services
             }
         }
 
+        /// <summary>
+        /// Submits responses to a survey to the backend API.
+        /// </summary>
+        /// <param name="surveyId">The unique identifier of the survey being submitted</param>
+        /// <param name="responses">List of question responses to submit</param>
+        /// <returns>True if submission was successful; otherwise, false.</returns>
         public async Task<bool> SubmitSurveyResponseAsync(string surveyId, List<QuestionResponse> responses)
         {
             try
@@ -91,6 +114,10 @@ namespace FieldSurveyMAUIApp.Services
             }
         }
 
+        /// <summary>
+        /// Retrieves a list of previously submitted survey responses from the API.
+        /// </summary>
+        /// <returns>A list of SurveyResponse objects if successful; otherwise, an empty list.</returns>
         public async Task<List<SurveyResponse>> GetSurveyResponsesAsync()
         {
             try
