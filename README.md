@@ -48,24 +48,24 @@ FieldSurveyMAUIApp/
 ## 📱 APP SCREENSHOTS
 
 ### iOS Screenshots
-| Login Screen | Survey List | Survey Form | Location Capture |
-|-------------|-------------|-------------|-----------------|
-| ![iOS Login](./screenshots/ios_login.png) | ![iOS Surveys](./screenshots/ios_surveys.png) | ![iOS Survey Form](./screenshots/ios_survey_form.png) | ![iOS Location](./screenshots/ios_location.png) |
+| Login Screen | Survey List | Survey Form | Filled Survey |
+|-------------|-------------|-------------|---------------|
+| ![iOS Login](./screenshots/iphone_login.png) | ![iOS Surveys](./screenshots/iphone_survey_list.png) | ![iOS Survey Form](./screenshots/iOS_survey_form.png) | ![iOS Filled](./screenshots/iOS_survey_filled.png) |
 
 ### Android Screenshots
-| Login Screen | Survey List | Survey Form | Location Capture |
-|-------------|-------------|-------------|-----------------|
-| ![Android Login](./screenshots/android_login.png) | ![Android Surveys](./screenshots/android_surveys.png) | ![Android Survey Form](./screenshots/android_survey_form.png) | ![Android Location](./screenshots/android_location.png) |
+| Login Screen | Survey List | Survey Form | Filled Survey |
+|-------------|-------------|-------------|---------------|
+| ![Android Login](./screenshots/android_login.jpeg) | ![Android Surveys](./screenshots/android_survey_list.jpeg) | ![Android Survey Form](./screenshots/android_survey_form.jpeg) | ![Android Filled](./screenshots/android_survey_filled.jpeg) |
 
 ### macOS Screenshots
-| Login Screen | Survey List | Survey Form | Location Capture |
-|-------------|-------------|-------------|-----------------|
-| ![macOS Login](./screenshots/macos_login.png) | ![macOS Surveys](./screenshots/macos_surveys.png) | ![macOS Survey Form](./screenshots/macos_survey_form.png) | ![macOS Location](./screenshots/macos_location.png) |
+| Login Screen | Survey List | Survey Form | Filled Survey |
+|-------------|-------------|-------------|---------------|
+| ![macOS Login](./screenshots/mac_login.png) | ![macOS Surveys](./screenshots/mac_survey_list.png) | ![macOS Survey Form](./screenshots/mac_survey_form.png) | ![macOS Filled](./screenshots/mac_survey_filled.png) |
 
-### Completed Surveys View
+### Reports View
 | iOS | Android | macOS |
 |-----|---------|-------|
-| ![iOS Completed](./screenshots/ios_completed.png) | ![Android Completed](./screenshots/android_completed.png) | ![macOS Completed](./screenshots/macos_completed.png) |
+| ![iOS Reports](./screenshots/iOS_reports.png) | ![Android Filled](./screenshots/android_filled.jpeg) | ![macOS Reports](./screenshots/mac_reports.png) |
 
 ---
 
