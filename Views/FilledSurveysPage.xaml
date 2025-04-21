@@ -7,7 +7,6 @@
              Title="{Binding Title}">
 
     <Grid RowDefinitions="Auto,*" Padding="10">
-        <!-- Header with refresh button -->
         <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,10">
             <Label Text="Disaster Survey Reports" 
                    FontSize="24" 
@@ -19,20 +18,17 @@
         </Grid>
         
         <Grid Grid.Row="1">
-            <!-- Shows when loading responses -->
             <ActivityIndicator IsRunning="{Binding IsBusy}" 
                                IsVisible="{Binding IsBusy}"
                                HorizontalOptions="Center" 
                                VerticalOptions="Center" />
 
-            <!-- Error message if needed -->
             <Label Text="{Binding ErrorMessage}" 
                    IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}}"
                    TextColor="Red" 
                    HorizontalOptions="Center" 
                    VerticalOptions="Center" />
 
-            <!-- Survey responses list -->
             <CollectionView ItemsSource="{Binding Responses}">
                 <CollectionView.EmptyView>
                     <Label Text="No survey responses available" 
@@ -43,7 +39,6 @@
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodel:SurveyResponseViewModel">
-                        <!-- Replaced Frame with Border using AppThemeBinding for adaptive background -->
                         <Border Margin="5" Padding="10"
                                 Stroke="LightGray" StrokeThickness="1"
                                 Background="{AppThemeBinding Light=#FFFFFF, Dark=#2C2C2C}">

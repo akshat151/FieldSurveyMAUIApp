@@ -7,7 +7,6 @@
              Title="{Binding Title}">
     
     <Grid RowDefinitions="Auto, *" Padding="10">
-        <!-- Header with refresh, view reports and logout buttons -->
         <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto,Auto" Margin="0,0,0,10">
             <Button Grid.Column="1"
                     Text="Refresh"
@@ -26,7 +25,6 @@
                     TextColor="{AppThemeBinding Light=#FFFFFF, Dark=#FFFFFF}" />
         </Grid>
 
-        <!-- Survey grid with two columns -->
         <Grid Grid.Row="1">
             <CollectionView ItemsSource="{Binding Surveys}">
                 <CollectionView.ItemsLayout>
@@ -37,7 +35,6 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Survey">
-                        <!-- Replacing Frame with Border and using AppThemeBinding for Background -->
                         <Border Margin="10" Padding="15" WidthRequest="175" HeightRequest="200"
                                 Stroke="LightGray" StrokeThickness="1"
                                 Background="{AppThemeBinding Light=#FFFFFF, Dark=#3A3A3A}">
@@ -50,12 +47,10 @@
                                     CommandParameter="{Binding .}" />
                             </Border.GestureRecognizers>
                             <Grid RowDefinitions="*, Auto" RowSpacing="10">
-                                <!-- Survey Image -->
                                 <Image Grid.Row="0"
                                        Source="{Binding ImageUrl}"
                                        Aspect="AspectFill"
                                        HeightRequest="100" />
-                                <!-- Survey Details -->
                                 <VerticalStackLayout Grid.Row="1" Spacing="5">
                                     <Label Text="{Binding Title}"
                                            FontAttributes="Bold"
@@ -73,7 +68,6 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             
-            <!-- Loading and error overlays -->
             <ActivityIndicator IsRunning="{Binding IsBusy}"
                                IsVisible="{Binding IsBusy}"
                                HorizontalOptions="Center"
